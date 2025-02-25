@@ -1,0 +1,85 @@
+You are given a histogram represented by an array arr, where each element of the array denotes the height of the bars in the histogram. All bars have the same width of 1 unit.
+
+Your task is to find the largest rectangular area possible in the given histogram, where the rectangle can be formed using a number of contiguous bars.
+
+Examples:
+
+Input: arr[] = [60, 20, 50, 40, 10, 50, 60]
+ Largest-Rectangular-Area-in-a-Histogram
+Output: 100
+Explanation: We get the maximum by picking bars highlighted above in green (50, and 60). The area is computed (smallest height) * (no. of the picked bars) = 50 * 2 = 100.
+
+Input: arr[] = [3, 5, 1, 7, 5, 9]
+Output: 15
+Explanation:  We get the maximum by picking bars 7, 5 and 9. The area is computed (smallest height) * (no. of the picked bars) = 5 * 3 = 15.
+
+Input: arr[] = [3]
+Output: 3
+Explanation: In this example the largest area would be 3 of height 3 and width 1.
+
+Constraints:
+1 ≤ arr.size() ≤ 105
+0 ≤ arr[i] ≤ 104
+
+
+Solution Code-
+
+
+class Solution {
+    public static int getMaxArea(int arr[]) {
+        int n = arr.length;
+        int ans = 0;
+
+        // Arrays to store the indices of the next and previous smaller elements
+        int[] lmin = new int[n];  // Left index for each bar
+        int[] rmin = new int[n];  // Right index for each bar
+
+        // Initialize left and right bounds
+        Arrays.fill(lmin, -1);
+        Arrays.fill(rmin, n);
+
+        // Fill the left bounds
+        lfill(arr, lmin, n);
+        // Fill the right bounds
+        rfill(arr, rmin, n);
+
+        // Calculate the maximum area
+        for (int i = 0; i < n; i++) {
+            int cur = (rmin[i] - lmin[i] - 1) * arr[i];
+            ans = Math.max(ans, cur);
+        }
+
+        return ans;
+    }
+
+    // Calculate the previous smaller element for each index
+    static void lfill(int[] arr, int[] lmin, int n) {
+        Stack<Integer> st = new Stack<>();
+        for (int i = 0; i < n; i++) {
+            // While stack is not empty and the current element is smaller than the top of the stack
+            while (!st.isEmpty() && arr[st.peek()] >= arr[i]) {
+                st.pop();
+            }
+            // If the stack is empty, it means there is no smaller element on the left
+            if (!st.isEmpty()) {
+                lmin[i] = st.peek();
+            }
+            st.push(i);  // Push the current index to the stack
+        }
+    }
+
+    // Calculate the next smaller element for each index
+    static void rfill(int[] arr, int[] rmin, int n) {
+        Stack<Integer> st = new Stack<>();
+        for (int i = n - 1; i >= 0; i--) {
+            // While stack is not empty and the current element is smaller than the top of the stack
+            while (!st.isEmpty() && arr[st.peek()] >= arr[i]) {
+                st.pop();
+            }
+            // If the stack is empty, it means there is no smaller element on the right
+            if (!st.isEmpty()) {
+                rmin[i] = st.peek();
+            }
+            st.push(i);  // Push the current index to the stack
+        }
+    }}
