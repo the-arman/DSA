@@ -1,0 +1,62 @@
+Given a square chessboard, the initial position of Knight and position of a target. Find out the minimum steps a Knight will take to reach the target position.
+
+Note:
+The initial and the target position coordinates of Knight have been given according to 1-base indexing.
+
+Example 1:
+
+Input:
+N=6
+knightPos[ ] = [4, 5]
+targetPos[ ] = [1, 1]
+
+Output:
+3
+Explanation:
+
+Knight takes 3 step to reach from 
+(4, 5) to (1, 1):
+(4, 5) -> (5, 3) -> (3, 2) -> (1, 1).
+
+Your Task:
+You don't need to read input or print anything. Your task is to complete the function minStepToReachTarget() which takes the initial position of Knight (KnightPos), the target position of Knight (TargetPos), and the size of the chessboard (N) as input parameters and returns the minimum number of steps required by the knight to reach from its current position to the given target position or return -1 if its not possible.
+
+Constraints:
+1 <= N <= 1000
+1 <= Knight_pos(X, Y), Targer_pos(X, Y) <= N
+
+
+Solution Code-
+
+class Solution
+{
+    //Function to find out minimum steps Knight needs to reach target position.
+    public int minStepToReachTarget(int KnightPos[], int TargetPos[], int n)
+    {
+        // Code here
+        boolean[][] vis =new boolean[n][n];
+        int[][] moves=new int[][]{{2, -1}, {2, 1}, {-2, -1}, {-2, 1},{1, 2}, {1, -2}, {-1, 2}, {-1, -2}};
+        int ans=0;
+        Queue<int[]> q=new LinkedList<>();
+        KnightPos[0]--;KnightPos[1]--;TargetPos[0]--;TargetPos[1]--;
+        q.offer(new int[]{KnightPos[0], KnightPos[1]});
+        vis[KnightPos[0]][KnightPos[1]]=true;
+        while(!q.isEmpty()){
+            int size=q.size();
+            for(int i=0;i<size;i++){
+                int[] node=q.poll();
+                int x=node[0], y=node[1];
+                if(x==TargetPos[0] && y==TargetPos[1])return ans;
+                for(int j=0;j<8;j++){
+                    int nx=x+moves[j][0], ny=y+moves[j][1];
+                    if(nx>=0 && nx<n && ny>=0 && ny<n && !vis[nx][ny]){
+                        q.offer(new int[]{nx, ny});
+                        vis[nx][ny]=true;
+                    }
+                }
+            }
+            ans++;
+        }   
+        return -1; 
+    }
+}
