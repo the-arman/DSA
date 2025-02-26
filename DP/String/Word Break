@@ -1,0 +1,50 @@
+Given a string s and a dictionary of n words dictionary, find out if "s" can be segmented into a space-separated sequence of dictionary words.
+Return 1 if it is possible to break the s into a sequence of dictionary words, else return 0. 
+
+Note: From the dictionary dictionary each word can be taken any number of times and in any order.
+
+Examples :
+
+Input: n = 6, s = "ilike", dictionary = { "i", "like", "sam", "sung", "samsung", "mobile"}
+Output: 1
+Explanation: The string can be segmented as "i like".
+
+Input: n = 6, s = "ilikesamsung", dictionary = { "i", "like", "sam", "sung", "samsung", "mobile"}
+Output: 1
+Explanation: The string can be segmented as "i like samsung" or "i like sam sung".
+
+Constraints:
+1 ≤ n ≤ 12
+1 ≤ len(s) ≤ 1100
+
+class Solution
+{
+    public static int wordBreak(int p, String s, ArrayList<String> dictionary )
+    {
+        //code here
+        int n=s.length();
+        int[] dp=new int[n];
+        Arrays.fill(dp, -1);
+        Set<String> set=new HashSet<>();
+        for(String x:dictionary)set.add(x);
+        return help(0, s, set, dp, n);
+      
+    }
+   static int help(int i, String s, Set<String> set ,int[] dp, int n){
+        if(i==n)return 1;
+        if(dp[i]!=-1)return dp[i];
+        String x="";
+        int ctr=-1;
+        for(int j=i;j<n;j++){
+            x=x+s.charAt(j);
+            if(set.contains(x) && help(j+1, s, set, dp, n)==1){ctr=1;break;}
+            else {
+               ctr=0;
+            }
+        }
+        return dp[i]=ctr;
+    }
+}
+
+T.C.- O(n^2)
+S.C.- O(n)
