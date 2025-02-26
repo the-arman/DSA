@@ -1,0 +1,76 @@
+A frog jumps either 1, 2, or 3 steps to go to the top. In how many ways can it reach the top of nth step.
+
+Examples:
+
+Input: n = 4
+Output: 7
+Explanation: Below are the 7 ways to reach 4th step:
+1 step + 1 step + 1 step + 1 step
+1 step + 2 step + 1 step
+2 step + 1 step + 1 step
+1 step + 1 step + 2 step
+2 step + 2 step
+3 step + 1 step
+1 step + 3 step
+
+Input: n = 2
+Output: 2
+Explanation: Below are the 2 ways to reach 2nd step:
+1 step + 1 step 
+2 step 
+
+Input: n = 1
+Output: 1
+
+Constraints:
+1 ≤ n ≤ 30
+
+Solution Code-
+
+Top-Down DP:-
+
+class Solution {
+    // Function to count the number of ways in which frog can reach the top.
+    static int countWays(int n) {
+        // add your code here
+        int[] dp=new int[n+1];
+        Arrays.fill(dp, -1);
+        return help(n, dp);
+    }
+    static int help(int n, int[] dp){
+        if(n==0)return dp[n]=1;
+        if(dp[n]!=-1)return dp[n];
+        int one=0, two=0, three=0;
+        if(n-1>=0)one=help(n-1, dp);
+        if(n-2>=0)two=help(n-2, dp);
+        if(n-3>=0)three=help(n-3, dp);
+        return dp[n]=one+two+three;
+  
+    }
+}
+
+T.C.- O(n)
+S.C.-O(n)
+
+
+Bottom Up DP:-
+
+class Solution {
+    // Function to count the number of ways in which frog can reach the top.
+    static int countWays(int n) {
+        // add your code here
+      
+    int[] dp=new int[n+1];
+    dp[0]=1;
+    for(int i=1;i<=n;i++){
+        if(i-1>=0)dp[i]+=dp[i-1];
+        if(i-2>=0)dp[i]+=dp[i-2];
+        if(i-3>=0)dp[i]+=dp[i-3];
+    }
+    return dp[n];
+    }
+}
+
+
+T.C.- O(n)
+S.C.-O(n)
