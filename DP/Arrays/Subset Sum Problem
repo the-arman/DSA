@@ -1,0 +1,53 @@
+Given an array of positive integers arr[] and a value target, determine if there is a subset of the given array with sum equal to given target. 
+
+Examples:
+
+Input: arr[] = [3, 34, 4, 12, 5, 2], target = 9
+Output: true 
+Explanation: Here there exists a subset with target sum = 9, 4+3+2 = 9.
+
+Input: arr[] = [3, 34, 4, 12, 5, 2], target = 30
+Output: false
+Explanation: There is no subset with target sum 30.
+
+Input: arr[] = [1, 2, 3], sum = 6
+Output: true
+Explanation: The entire array can be taken as a subset, giving 1 + 2 + 3 = 6.
+
+Constraints:
+1 <= arr.size() <= 200
+1<= arr[i] <= 200
+1<= sum <= 4 x 104
+
+Solution Code:-
+
+Top Up DP:-
+
+class Solution {
+
+    static Boolean isSubsetSum(int arr[], int target) {
+        // code here
+        int n=arr.length, total=0;
+        for(int i:arr)total+=i;
+        int[][] dp=new int[n+1][total+1];
+        for(int[] d:dp)Arrays.fill(d, -1);
+        return help(arr, target, n, 0, dp)==1?true:false;
+    }
+    static int help(int[] arr, int target, int n, int calc, int[][] dp){
+        //BASE CASE
+        if(n==0){
+            if(calc==target)return dp[n][calc]=1;
+            return dp[n][calc]=0;
+        }
+        if(dp[n][calc]==1)return dp[n][calc];
+        if(dp[n][calc]==0)return dp[n][calc];
+        if(calc==target)return dp[n][calc]=1;
+        int a=help(arr, target, n-1, arr[n-1]+calc, dp) ;
+        int b=help(arr, target, n-1, calc, dp);
+        if(a==1 || b==1)return dp[n][calc]=1;
+        return dp[n][calc]=0;
+    }
+}
+
+T.C.- O(n*totalSum)
+S.C.- O(n*totalSum)
