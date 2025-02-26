@@ -1,0 +1,60 @@
+You are given a matrix mat[][] of size n x m where each element is a positive integer. Starting from any cell in the first row, you are allowed to move to the next row, but with specific movement constraints. From any cell (r, c) in the current row, you can move to any of the three possible positions :
+
+    (r+1, c-1) — move diagonally to the left.
+    (r+1, c) — move directly down.
+    (r+1, c+1) — move diagonally to the right.
+
+Find the maximum sum of any path starting from any column in the first row and ending at any column in the last row, following the above movement constraints.
+
+Examples :
+
+Input: mat[][] = [[3, 6, 1], [2, 3, 4], [5, 5, 1]]
+Output: 15
+Explaination: The best path is (0, 1) -> (1, 2) -> (2, 1). It gives the maximum sum as 15.
+
+Input: mat[][] = [[2, 1, 1], [1, 2, 2]]
+Output: 4
+Explaination: The best path is (0, 0) -> (1, 1). It gives the maximum sum as 4.
+
+Input: mat[][] = [[25]]
+Output: 25
+Explaination: (0, 0) is the only cell in mat[][], so maximum path sum will be 25.
+
+Constraints:
+1 ≤ mat.size() ≤ 500
+1 ≤ mat[i].size() ≤ 500
+1 ≤ mat[i][j] ≤ 1000
+
+
+Solution Code:-
+
+Top Down-
+
+class Solution {
+    public int maximumPath(int[][] mat) {
+        // code here
+        int n=mat.length, m=mat[0].length;
+        int[][] dp=new int[n][m];
+        for(int[] d:dp)Arrays.fill(d, -1);
+        int max=Integer.MIN_VALUE;
+        for(int i=0;i<m;i++){
+            help(mat, n, m, dp, 0, i);
+            max=Math.max(max, dp[0][i]);}
+        return max;
+    }
+    int help(int[][] mat, int n, int m, int[][] dp, int r, int c){
+        if(r<0 || r==n || c<0 || c==m)return Integer.MIN_VALUE;
+        if(r==n-1){
+            return dp[r][c]=mat[r][c];
+        }
+        if(dp[r][c]!=-1)return dp[r][c];
+        int one=0, two=0, three=0;
+        if(c>0)one=help(mat, n, m, dp, r+1, c-1);
+        two=help(mat, n, m, dp, r+1, c);
+        three=help(mat, n, m, dp, r+1, c+1);
+        return dp[r][c]=mat[r][c]+Math.max(one, Math.max(two, three));
+    }
+}
+
+T.C.- O(nm)
+S.C.- O(nm)
