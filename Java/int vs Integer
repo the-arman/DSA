@@ -1,0 +1,110 @@
+In java, int and Integer both represent integer values, but there are significant difference between the two, as they belong to different tyeps: int is a primitive type, while Integer is an object that part of the Java class library. Here are the key differences:
+
+1. Primitive vs. Object:
+
+    int:
+        It is a primitive data type in Java.
+        It represents a simple value and is not an object.
+        It is stored directly in memory as a value.
+    Integer:
+        It is a wrapper class for the primitive int type, part of the java.lang package.
+        It is an object, meaning it can be used in collections like ArrayList, which can only hold objects, not primitives.
+        It can be used to represent null, which is not possible with int.
+
+2. Default Values:
+
+    int:
+        The default value of int is 0 when it is declared as an instance variable in a class (non-static).
+    Integer:
+        The default value of an Integer object is null (since it is an object).
+
+3. Nullability:
+
+    int:
+        It cannot be null. It can only hold numerical values, like 0 or any valid integer within the int range (-2^31 to 2^31-1).
+    Integer:
+        It can be null, making it useful in situations where you need to represent the absence of a value (like in databases, or when dealing with collections that can have null values).
+
+4. Memory Usage:
+
+    int:
+        It uses 4 bytes (32 bits) of memory.
+    Integer:
+        It uses more memory since it is an object. It stores the int value in an internal field, and also has some overhead due to being a class (such as metadata for object methods). Typically, it uses more than 4 bytes (usually around 16 bytes depending on the JVM implementation).
+
+5. Autoboxing and Unboxing:
+
+    Autoboxing is the automatic conversion between int and Integer. When you assign an int to an Integer or vice versa, the Java compiler automatically handles the conversion:
+        Autoboxing: Converting an int to an Integer.
+        Unboxing: Converting an Integer to an int.
+
+Example:
+
+int a = 10;
+Integer b = a;  // Autoboxing: int to Integer
+int c = b;      // Unboxing: Integer to int
+
+6. Methods and Utility:
+
+    int:
+        Being a primitive type, int does not have methods. You can perform mathematical operations directly on int values.
+    Integer:
+        Integer is a class and comes with several useful methods, such as:
+            Integer.parseInt(String) to convert a string to an int.
+            Integer.valueOf(String) to create an Integer object from a string.
+            Integer.toString() to convert an Integer to a string.
+            Integer.compare(int, int) to compare two int values.
+
+Example:
+
+Integer x = Integer.valueOf("123");  // Converts string to Integer
+int y = Integer.parseInt("456");     // Converts string to int
+
+7. Usage in Collections:
+
+    int:
+        You cannot directly use int in collections like ArrayList, HashSet, etc., because they require objects.
+        However, you can use Integer in collections.
+    Integer:
+        You can use Integer in collections (e.g., ArrayList<Integer>, HashSet<Integer>) since it is an object.
+
+8. Performance:
+
+    int:
+        Since int is a primitive, it is faster and more memory-efficient when performing arithmetic operations or manipulating values.
+    Integer:
+        Operations involving Integer are slower because of the overhead of working with objects (autoboxing, method calls, etc.).
+
+Example Comparison:
+
+// Using int
+int num1 = 10;
+int num2 = 20;
+int sum = num1 + num2;  // Simple arithmetic operation
+
+// Using Integer
+Integer num3 = 10;  // Autoboxing from int to Integer
+Integer num4 = 20;  // Autoboxing from int to Integer
+Integer sumObj = num3 + num4;  // Autoboxing and unboxing happen automatically
+
+// Using Integer in a collection
+ArrayList<Integer> list = new ArrayList<>();
+list.add(10);  // Autoboxing from int to Integer
+
+When to Use int vs. Integer:
+
+    Use int when you need simple, fast, and efficient handling of primitive integer values.
+    Use Integer when you need an object (e.g., to use in collections like ArrayList, or if you need the ability to represent null), or if you need to use utility methods from the Integer class (e.g., parsing strings to integers).
+
+Summary of Differences:
+Feature	int	Integer
+Type	Primitive	Wrapper class (Object)
+Default Value	0	null
+Nullability	Cannot be null	Can be null
+Memory Usage	4 bytes	More than 4 bytes
+Autoboxing/Unboxing	Not applicable	Supports autoboxing
+Methods	No methods	Has methods (e.g., parseInt(), valueOf())
+Usage in Collections	Cannot be used	Can be used
+Performance	Faster	Slower due to object overhead
+
+So, in general, use int for simple, performance-sensitive integer operations, and Integer when you need object behavior, nullability, or are working with collections.
