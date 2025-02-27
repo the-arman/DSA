@@ -94,3 +94,547 @@ class Solution {
         return minStack.peek();
     }
 }
+
+
+[Approach 1] With Extra Space - O(1) Time and O(n) Space
+
+    Create a class node that has two variables Val and min. Val will store the actual value that we are going to insert in the stack, whereas min will store the min value so far seen up to that node.
+
+Below is the implementation of the above approach:
+1
+
+// Java program to implement a stack that supports
+
+2
+
+// all operations in O(1) time and O(n) extra space.
+
+3
+
+​
+
+4
+
+import java.util.Stack;
+
+5
+
+​
+
+6
+
+class SpecialStack {
+
+7
+
+    private Stack<int[]> s;
+
+8
+
+​
+
+9
+
+    public SpecialStack() {
+
+10
+
+        s = new Stack<>();
+
+11
+
+    }
+
+12
+
+​
+
+13
+
+    // Add an element to the top of Stack
+
+14
+
+    public void push(int x) {
+
+15
+
+        int newMin = s.isEmpty() ? x : Math.min(x, s.peek()[1]);
+
+16
+
+        s.push(new int[]{x, newMin});
+
+17
+
+    }
+
+18
+
+​
+
+19
+
+    // Remove the top element from the Stack
+
+20
+
+    public void pop() {
+
+21
+
+        if (!s.isEmpty()) {
+
+22
+
+            s.pop();
+
+23
+
+        }
+
+24
+
+    }
+
+25
+
+​
+
+26
+
+    // Returns top element of the Stack
+
+27
+
+    public int peek() {
+
+28
+
+        return s.isEmpty() ? -1 : s.peek()[0];
+
+29
+
+    }
+
+30
+
+​
+
+31
+
+    // Finds minimum element of Stack
+
+32
+
+    public int getMin() {
+
+33
+
+        return s.isEmpty() ? -1 : s.peek()[1];
+
+34
+
+    }
+
+35
+
+​
+
+36
+
+    public static void main(String[] args) {
+
+37
+
+        SpecialStack ss = new SpecialStack();
+
+38
+
+​
+
+39
+
+        // Function calls
+
+40
+
+        ss.push(2);
+
+41
+
+        ss.push(3);
+
+42
+
+        System.out.print(ss.peek() + " ");
+
+43
+
+        ss.pop();
+
+44
+
+        System.out.print(ss.getMin() + " ");
+
+45
+
+        ss.push(1);
+
+46
+
+        System.out.print(ss.getMin() + " ");
+
+47
+
+    }
+
+48
+
+}
+
+
+Output
+
+-4
+0
+-4
+-1
+
+[Approach 2] Without Extra Space- O(1) Time and O(1) Space
+
+    The idea is to use a variable minEle to track the minimum element in the stack. Instead of storing the actual value of minEle in the stack, we store a modified value when pushing an element smaller than minEle. This allows retrieving the previous minimum in O(1) time and space.
+
+Operations
+
+    Push(x)
+        If the stack is empty, push x and set minEle = x.
+        If x >= minEle, push x normally.
+        If x < minEle, push 2*x - minEle and update minEle = x (this encodes the previous min).
+    Pop()
+        Remove the top element.
+        If the removed element is >= minEle, no change in minEle.
+        If the removed element is < minEle, update minEle = 2*minEle - top (decoding the previous min).
+    Peek()
+        Returns minEle if the top is modified (encoded) or top otherwise.
+    getMin()
+        Returns minEle, the current minimum in O(1) time.
+
+1
+
+// Java program to implement a stack that supports
+
+2
+
+// all operations in O(1) time and O(1) extra space.
+
+3
+
+​
+
+4
+
+import java.util.Stack;
+
+5
+
+​
+
+6
+
+class SpecialStack {
+
+7
+
+    private Stack<Integer> s;
+
+8
+
+    private int minEle;
+
+9
+
+​
+
+10
+
+    public SpecialStack() {
+
+11
+
+        s = new Stack<>();
+
+12
+
+        minEle = -1;
+
+13
+
+    }
+
+14
+
+​
+
+15
+
+    // Add an element to the top of Stack
+
+16
+
+    public void push(int x) {
+
+17
+
+        if (s.isEmpty()) {
+
+18
+
+            minEle = x;
+
+19
+
+            s.push(x);
+
+20
+
+        }
+
+21
+
+        // If new number is less than minEle
+
+22
+
+        else if (x < minEle) {
+
+23
+
+            s.push(2 * x - minEle);
+
+24
+
+            minEle = x;
+
+25
+
+        } else {
+
+26
+
+            s.push(x);
+
+27
+
+        }
+
+28
+
+    }
+
+29
+
+​
+
+30
+
+    // Remove the top element from the Stack
+
+31
+
+    public void pop() {
+
+32
+
+        if (s.isEmpty()) {
+
+33
+
+            return;
+
+34
+
+        }
+
+35
+
+​
+
+36
+
+        int top = s.pop();
+
+37
+
+​
+
+38
+
+        // Minimum will change, if the minimum element
+
+39
+
+        // of the stack is being removed.
+
+40
+
+        if (top < minEle) {
+
+41
+
+            minEle = 2 * minEle - top;
+
+42
+
+        }
+
+43
+
+    }
+
+44
+
+​
+
+45
+
+    // Returns top element of the Stack
+
+46
+
+    public int peek() {
+
+47
+
+        if (s.isEmpty()) {
+
+48
+
+            return -1;
+
+49
+
+        }
+
+50
+
+​
+
+51
+
+        int top = s.peek();
+
+52
+
+​
+
+53
+
+        // If minEle > top means minEle stores value of top.
+
+54
+
+        return (minEle > top) ? minEle : top;
+
+55
+
+    }
+
+56
+
+​
+
+57
+
+    // Finds minimum element of Stack
+
+58
+
+    public int getMin() {
+
+59
+
+        if (s.isEmpty()) {
+
+60
+
+            return -1;
+
+61
+
+        }
+
+62
+
+​
+
+63
+
+        // variable minEle stores the minimum element
+
+64
+
+        // in the stack.
+
+65
+
+        return minEle;
+
+66
+
+    }
+
+67
+
+​
+
+68
+
+    public static void main(String[] args) {
+
+69
+
+        SpecialStack ss = new SpecialStack();
+
+70
+
+​
+
+71
+
+        // Function calls
+
+
+Output
+
+3 2 1 
+
+How does this approach work? 
+
+When the element to be inserted is less than minEle, we insert "2x - minEle". The important thing to note is, that 2x - minEle will always be less than x (proved below), i.e., new minEle and while popping out this element we will see that something unusual has happened as the popped element is less than the minEle. So we will be updating minEle.
+
+    How 2*x - minEle is less than x in push()? 
+
+    x < minEle which means x - minEle < 0 
+
+    // Adding x on both sides
+    x - minEle + x < 0 + x 
+    2*x - minEle < x 
+    We can conclude 2*x - minEle < new minEle 
+
+While popping out, if we find the element(y) less than the current minEle, we find the new minEle = 2*minEle - y
+
+    How previous minimum element, prevMinEle is, 2*minEle - y
+    in pop() is y the popped element?
+
+     // We pushed y as 2x - prevMinEle. Here 
+    // prevMinEle is minEle before y was inserted
+
+    y = 2*x - prevMinEle  
+
+    // Value of minEle was made equal to x
+    minEle = x
+
+    new minEle = 2 * minEle - y 
+                       = 2*x - (2*x - prevMinEle)
+                       = prevMinEle // This is what we wanted
