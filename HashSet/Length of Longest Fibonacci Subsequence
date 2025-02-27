@@ -1,0 +1,79 @@
+Problem description-
+
+A sequence x1, x2, ..., xn is Fibonacci-like if:
+
+    n >= 3
+    xi + xi+1 == xi+2 for all i + 2 <= n
+
+Given a strictly increasing array arr of positive integers forming a sequence, return the length of the longest Fibonacci-like subsequence of arr. If one does not exist, return 0.
+
+A subsequence is derived from another sequence arr by deleting any number of elements (including none) from arr, without changing the order of the remaining elements. For example, [3, 5, 8] is a subsequence of [3, 4, 5, 6, 7, 8].
+
+ 
+
+Example 1:
+
+Input: arr = [1,2,3,4,5,6,7,8]
+Output: 5
+Explanation: The longest subsequence that is fibonacci-like: [1,2,3,5,8].
+
+Example 2:
+
+Input: arr = [1,3,7,11,12,14,18]
+Output: 3
+Explanation: The longest subsequence that is fibonacci-like: [1,11,12], [3,11,14] or [7,11,18].
+
+ 
+
+Constraints:
+
+    3 <= arr.length <= 1000
+    1 <= arr[i] < arr[i + 1] <= 109
+
+
+Solution-
+
+Approach 1: Brute Force
+
+class Solution {
+    public int lenLongestFibSubseq(int[] arr) {
+        int ans=0;
+        int n=arr.length;
+        Set<Integer> set=new HashSet<>();
+        for(int i=0;i<n;i++)set.add(arr[i]);
+        for(int i=0;i<n-2;i++){
+for(int j=i+1;j<n-1;j++){
+    int a=arr[i], b=arr[j];
+    int c=a+b, ctr=0;
+    while(set.contains(c)){
+        a=b;
+        b=c;
+        c=a+b;
+        if(ctr==0)ctr=2;
+        ctr++;
+    }
+    ans=Math.max(ans, ctr);
+}
+
+        }
+        return ans;
+    }
+}
+
+Let n be the length of the input array arr.
+
+    Time complexity: O(n2logM)
+
+    The time complexity of this algorithm is determined by how many times the loops run. The outer two loops iterate over all pairs of numbers in arr, which results in O(n2) iterations. Within these loops, we attempt to build a Fibonacci-like sequence by repeatedly checking if the next number exists in the set.
+
+    Since Fibonacci numbers grow exponentially, a sequence that stays within a maximum value of 109 can have at most 43 terms. This is because the Fibonacci sequence increases so rapidly that it reaches 109 in at most 43 steps. As a result, the inner loop can run at most 43 times, meaning it runs in O(logM) time, where M is the largest number in arr.
+
+    Thus, combining the outer O(n2) loops with the O(logM) inner loop, the final time complexity is O(n2logM).
+
+        Note: Some might consider the complexity to be O(n3), but that assumption holds only if we consider the worst case where the sequence length is O(n). However, since Fibonacci numbers grow exponentially, the maximum sequence length is actually bounded by O(logM) rather than O(n).
+
+        The Fibonacci sequence growth rate: Fk​≈φk, where φ is the golden ratio ≈1.618.
+
+    Space complexity: O(n)
+
+    The algorithm uses a hash set to store all elements of arr for O(1) lookups. The space required for the set is proportional to the size of arr, which is n. Thus, the space complexity is O(n).
