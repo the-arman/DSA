@@ -1,0 +1,67 @@
+StringBuilder is a mutable sequence of Characters in java, used for efficiently modifying Strings. Unlike String, which is immutable, StringBuilder allows modifications without creating new objects, making it faster for string manipulations.
+
+
+1. Declaration ans Initialization-
+
+StringBuilder sb=new StringBuilder();
+StringBuilder sb2=new StringBuilder("Hello"); //Initialize with a string
+StringBuilder sb3=new StringBuilder(50); //specify the capacity
+
+2. Important Methods:-
+
+a. Append-
+Adds text to the end of the string
+
+StringBuilder sb=new SringBuilder("Hello");
+sb.append(" World");
+System.out.println(sb); // Hello World
+
+
+b. Insert-
+Inserts text at a specified index.
+
+sb.insert(5, "Java");
+System.out.println(sb); //Hello Java World
+
+c. Replace-
+Replaces a protion of the string
+
+sb.replace(6, 10, "Python");
+
+System.out.println(sb); Hello Python World
+
+
+d. Delete:-
+Removes characters between given indices
+
+sb.delete(6, 12);
+System.out.println(sb); //Hello World
+
+
+e. Reverse:-
+
+Reverses the string
+
+sb.reverse();
+System.out.println(sb);
+
+
+f. capacity-
+
+show the capacity of the string builder(default is 16)
+
+System.out.println(sb.capacity());
+
+g. Ensure Capacity-
+
+Manually increases capacity
+
+sb.ensureCapacity(50);
+
+When to use StringBuilder?
+
+- When performing frequent modifications (concatenation, insertion, deletion)
+- When optimizing performance for large string operations
+- when working in a single- threaded environmet(use StringBuffer for multithreading)
+
+
