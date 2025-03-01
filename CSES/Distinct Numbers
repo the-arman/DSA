@@ -1,0 +1,55 @@
+Problem Description-
+
+You are given a list of n integers, and your task is to calculate the number of distinct values in the list.
+Input
+The first input line has an integer n: the number of values.
+The second line has n integers x_1,x_2,\dots,x_n.
+Output
+Print one integers: the number of distinct values.
+Constraints
+
+1 \le n \le 2 \cdot 10^5
+1 \le x_i \le 10^9
+
+Example
+Input:
+5
+2 3 2 2 3
+
+Output:
+2
+
+
+Solution Code-
+
+import java.io.*;
+
+public class MissingNumber {
+    public static void main(String[] args) throws IOException {
+        BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+        BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(System.out));
+
+        int n = Integer.parseInt(br.readLine());
+        
+        // Calculate the sum of numbers from 1 to n using the formula
+        long totalSum = (long) n * (n + 1) / 2;
+        
+        // Read the numbers from input and calculate the sum of the input numbers
+        long inputSum = 0;
+        String[] input = br.readLine().split(" ");
+        for (int i = 0; i < n; i++) {
+            inputSum += Integer.parseInt(input[i]);
+        }
+        
+        // The missing number is the difference between totalSum and inputSum
+        long missingNumber = totalSum - inputSum;
+
+        bw.write(missingNumber + "\n");
+
+        bw.flush();
+        bw.close();
+        br.close();
+    }
+}
+T.C. O(N)
+S.C. O(1)
