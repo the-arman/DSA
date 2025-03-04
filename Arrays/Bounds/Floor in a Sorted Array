@@ -1,0 +1,79 @@
+Problem Description-
+
+Given a sorted array arr[] and an integer x, find the index (0-based) of the largest element in arr[] that is less than or equal to x. This element is called the floor of x. If such an element does not exist, return -1.
+
+Note: In case of multiple occurrences of ceil of x, return the index of the last occurrence.
+
+Examples
+
+Input: arr[] = [1, 2, 8, 10, 10, 12, 19], x = 5
+Output: 1
+Explanation: Largest number less than or equal to 5 is 2, whose index is 1.
+
+Input: arr[] = [1, 2, 8, 10, 10, 12, 19], x = 11
+Output: 4
+Explanation: Largest Number less than or equal to 11 is 10, whose indices are 3 and 4. The index of last occurrence is 4.
+
+Input: arr[] = [1, 2, 8, 10, 10, 12, 19], x = 0
+Output: -1
+Explanation: No element less than or equal to 0 is found. So, output is -1.
+
+Constraints:
+1 ≤ arr.size() ≤ 106
+1 ≤ arr[i] ≤ 106
+0 ≤ x ≤ arr[n-1]
+
+Intuition-
+
+Brute Force:
+Intuition:
+
+Iterate the array and simply check the condition and return the index of the element which is just smaller than or equal to x.
+Implementation:
+
+    Loop the array from start to end.
+    check the condition arr[i] > x for each element 
+    If the condition becomes true return the previous index i.e, i-1.
+    else return -1.
+
+Complexity:
+
+Time Complexity; O(N) where N is the size of the array.
+Space Complexity: O(1), no extra space required.
+Expected Approach:
+Intuition:
+
+We will use the binary search approach as the array is already sorted and we can easily decide whether to go with the left half or right half of the array from the mid index. This will help  us in reducing the searching time and avoid comparing for all the elements linearly.
+Implementation:
+
+    Calculate the upper_bound , The upper bound will return the position at which at which if we try placing the element, the array will remain sorted, it will return the iterator now calculate the index of that element i.e, index = it - v.begin() and finally return index-1 for the element which is just less than or equal to the given element x.
+
+Example:
+
+    N = 7, x = 5 
+    arr[] = {1,2,8,10,11,12,19}
+    Output: 1
+
+    Explanation: 5 can be placed at index 2, and the array will remain sorted. Since the element at a prior position is 2 , which is less than 5 , hence it can be considered as a floor. So return the index of 2 that is 1.
+
+Time Complexity: O(logN) where N is the size of the array as we are using upper_bound which takes logN time implemented using binary search.
+Space Complexity: O(1)
+
+Solution Code-
+
+class Solution {
+
+    static int findFloor(int[] arr, int x) {
+        // write code here
+        int lo=0, hi=arr.length;
+        while(lo<hi){
+            int mid=lo+(hi-lo)/2;
+            if(arr[mid]>x)hi=mid;
+            else lo=mid+1;
+        }
+        return lo-1;
+    }
+}
+
+T.C O(logn)
+S.C. O(1)
