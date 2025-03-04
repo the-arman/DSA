@@ -107,3 +107,41 @@ public class insaneproblem {
         br.close();
     }
 }
+
+
+Solution 2 (Intervals)
+
+Note that we do not need to care about more than 32
+different values of kn, because obviously k32≥232>109. From here and on, we focus on solving for only one value of kn
+
+.
+
+When kn
+is fixed and you are given yx=kn, notice y is fixed as xkn. Therefore, if we count the values x such that y
+
+is in the given interval as well, we will be properly counting the ordered pairs.
+
+Formally, this condition can be cleared out as:
+
+    l2≤xkn≤r2
+
+l2kn≤x≤r2kn
+Because x
+is an integer, ⌈l2kn⌉≤x≤⌊r2kn⌋
+
+Thus, when we intersect the two intervals, we get the following interval at last.
+max(l1,⌈l2kn⌉)≤x≤min(r1,⌊r2kn⌋)
+
+Compute the size of this interval for all kn
+(at most 32
+
+values) and the answer can be found.
+
+Do note the following details while implementing:
+
+    When r<l
+
+, the size of the interval is 0
+, not negative.
+Beware of overflows. Dealing with big integers can be helpful in avoiding this, but it may make your solution slow.
+Do not round up a fraction using the ceil function; This has been a recurring issue in almost every Div.4!
