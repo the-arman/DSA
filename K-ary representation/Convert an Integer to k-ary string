@@ -1,0 +1,40 @@
+If you want to convert an integer to a k-ary string(where k is any base, such as binary or ternary etc.) in Java, you can write a custom method to handle the conversion for any base k.
+
+General Approach-
+
+1. Divide the number n by k and keep track of the remainders.
+2. The remainders read in reverse order form the k-ary representation of the number.
+
+Solution Code-
+
+public class Main {
+
+    // Method to convert integer n to a k-ary (base k) string
+    public static String toKaryString(int n, int k) {
+        // Edge case for n = 0
+        if (n == 0) {
+            return "0";
+        }
+        
+        StringBuilder result = new StringBuilder();
+        
+        while (n > 0) {
+            int remainder = n % k;  // Get the remainder when dividing by k
+            result.insert(0, remainder);  // Prepend the remainder to the result
+            n /= k;  // Update n by dividing by k
+        }
+        
+        return result.toString();
+    }
+
+    public static void main(String[] args) {
+        int n = 10;  // Example integer
+        int k = 3;   // Example base (ternary in this case)
+
+        String karyString = toKaryString(n, k);
+        System.out.println(karyString);  // Output: "101" (for base 3)
+    }
+}
+
+T.C. O(logk(n))
+S.C. O(1)
