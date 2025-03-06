@@ -1,0 +1,54 @@
+Problem Description-
+
+Given a string s, return the length of the longest palindromic subsequence.
+
+A subsequence is a sequence that can be derived from the given sequence by deleting some or no elements without changing the order of the remaining elements.
+
+A palindromic sequence is a sequence that reads the same forward and backward.
+
+Examples:
+
+Input: s = "bbabcbcab"
+Output: 7
+Explanation: Subsequence "babcbab" is the longest subsequence which is also a palindrome.
+
+Input: s = "abcd"
+Output: 1
+Explanation: "a", "b", "c" and "d" are palindromic and all have a length 1.
+
+Input: s = "agbdba"
+Output: 5
+Explanation: The longest palindromic subsequence is "abdba", which has a length of 5. The characters in this subsequence are taken from the original string "agbdba", and they maintain the order of the string while forming a palindrome.
+
+Constraints:
+1 ≤ s.size() ≤ 1000
+The string contains only lowercase letters.
+
+
+Solution Code-
+
+class Solution {
+    public int longestPalinSubseq(String s1) {
+        // code here
+        char[] s=s1.toCharArray();
+        int n=s.length;
+        int[][] dp=new int[n][n];
+        for(int[] d:dp)Arrays.fill(d, -1);
+        return help(s, 0, n-1, dp);
+    }
+    int help(char[] s, int start, int end, int[][] dp){
+        if(start>end)return dp[start][end]=0;
+        if(start==end)return dp[start][end]=1;
+        if(dp[start][end]!=-1)return dp[start][end];
+        if(s[start]==s[end]){
+            dp[start][end]=2+help(s, start+1, end-1, dp);
+        }
+        else{
+            dp[start][end]=Math.max(help(s, start+1, end, dp), help(s, start, end-1, dp));
+        }
+        return dp[start][end];
+    }
+}
+
+T.C. O(N2)
+S.C. O(height of the tree=N)
