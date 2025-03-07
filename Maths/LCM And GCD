@@ -1,0 +1,133 @@
+Problem Description-
+
+Given two integers a and b, write a function lcmAndGcd() to compute their LCM and GCD. The function inputs two integers a and b and returns a list containing their LCM and GCD.
+
+Examples:
+
+Input: a = 5 , b = 10
+Output: [10, 5]
+Explanation: LCM of 5 and 10 is 10, while their GCD is 5.
+
+Input: a = 14 , b = 8
+Output: [56, 2]
+Explanation: LCM of 14 and 8 is 56, while their GCD is 2.
+
+Input: a = 1 , b = 1
+Output: [1, 1]
+Explanation: LCM of 1 and 1 is 1, while their GCD is 1.
+
+Expected Time Complexity: O(log(min(a, b))
+Expected Auxiliary Space: O(1)
+
+Constraints:
+1 <= a, b <= 109
+
+Intuition-
+
+1. gcd Function (Greatest Common Divisor):
+
+static int gcd(int a, int b) {
+    return b == 0 ? a : gcd(b, a % b);
+}
+
+This function calculates the GCD (Greatest Common Divisor) of two numbers a and b using the Euclidean algorithm, which is a well-known and efficient method to compute the GCD.
+How the Euclidean Algorithm Works:
+
+    The GCD of two numbers a and b is the largest number that divides both a and b without leaving a remainder.
+    The Euclidean algorithm is based on the property:
+    gcd(a,b)=gcd(b,a%b)
+    gcd(a,b)=gcd(b,a%b) This property is true because the divisor of a and b is the same as the divisor of b and a % b. This reduces the size of the problem at each step and helps in efficiently finding the GCD.
+
+Step-by-Step Explanation:
+
+    Base Case (b == 0):
+        If b is zero, then the GCD is a. This is because the GCD of any number a and 0 is a (i.e., gcd(a, 0) = a).
+    Recursive Case (b != 0):
+
+        If b is not zero, the function calls itself recursively, passing b as the first argument and a % b (the remainder of dividing a by b) as the second argument. This process continues until b becomes zero.
+
+        In each recursive call, the second argument (a % b) becomes smaller than b, reducing the problem's size. This process ensures that the recursion will eventually reach the base case (b == 0).
+
+Example:
+
+Let’s calculate the GCD of 48 and 18:
+
+    gcd(48, 18) → a = 48, b = 18
+        Since b != 0, it calls gcd(18, 48 % 18) → gcd(18, 12) (because 48 % 18 = 12).
+    gcd(18, 12) → a = 18, b = 12
+        Since b != 0, it calls gcd(12, 18 % 12) → gcd(12, 6) (because 18 % 12 = 6).
+    gcd(12, 6) → a = 12, b = 6
+        Since b != 0, it calls gcd(6, 12 % 6) → gcd(6, 0) (because 12 % 6 = 0).
+    gcd(6, 0) → a = 6, b = 0
+        Since b == 0, the function returns a = 6.
+
+So, gcd(48, 18) returns 6.
+2. lcm Function (Least Common Multiple):
+
+static int lcm(int a, int b) {
+    return a * b / gcd(a, b);
+}
+
+This function calculates the LCM (Least Common Multiple) of two numbers a and b. The LCM of two numbers is the smallest number that is divisible by both a and b.
+Mathematical Formula for LCM:
+
+The relationship between GCD and LCM is given by the following formula:
+LCM(a,b)=∣a×b∣GCD(a,b)
+LCM(a,b)=GCD(a,b)∣a×b∣​
+
+    Explanation:
+        The formula works because the product a * b contains both the factors of a and b. However, the GCD portion (i.e., gcd(a, b)) is common between a and b, so dividing by gcd(a, b) removes the common factor, leaving us with the smallest number that is divisible by both a and b.
+        This formula works because the product of a and b is always divisible by their GCD. The division by gcd(a, b) ensures that the result is the smallest multiple of both a and b.
+
+Step-by-Step Explanation:
+
+    Call gcd(a, b): The function first computes the GCD of a and b using the gcd function explained earlier.
+
+    Apply the LCM Formula: Once the GCD is known, it multiplies a and b, and then divides the product by their GCD to find the LCM.
+
+Example:
+
+Let’s calculate the LCM of 12 and 18:
+
+    First, compute the GCD of 12 and 18:
+        gcd(12, 18) = 6 (as we saw in the GCD example above).
+    Now, use the LCM formula:
+    LCM(12,18)=∣12×18∣GCD(12,18)=2166=36
+    LCM(12,18)=GCD(12,18)∣12×18∣​=6216​=36
+
+So, lcm(12, 18) returns 36.
+Why the Code Works:
+
+    The GCD function works by reducing the problem size using the Euclidean algorithm. The recursive nature of the algorithm quickly converges to the GCD by repeatedly reducing the problem size through division and modulo operations.
+
+    The LCM function works by leveraging the relationship between GCD and LCM. The formula LCM(a, b) = (a * b) / GCD(a, b) ensures that the smallest common multiple is computed efficiently by removing redundant factors that are shared between a and b.
+
+Time Complexity:
+
+    GCD: The time complexity of the gcd function using the Euclidean algorithm is O(log(min(a, b))), where a and b are the two input numbers. This is because each recursive call reduces the size of the problem by at least half.
+
+    LCM: The time complexity of the lcm function is dominated by the call to the gcd function, so the overall time complexity of lcm is also O(log(min(a, b))).
+
+Conclusion:
+
+    The GCD function works efficiently using the Euclidean algorithm, reducing the problem size at each step and ensuring the correct result in logarithmic time.
+    The LCM function uses the mathematical relationship between GCD and LCM to compute the least common multiple efficiently, without needing to directly iterate through multiples of the numbers.
+
+
+Code-
+
+class Solution {
+    public static int[] lcmAndGcd(int a, int b) {
+        // code here
+        int[] ans=new int[2];
+        ans[0]=lcm(a, b);
+        ans[1]=gcd(a, b);
+        return ans;
+    }
+    static int gcd(int a, int b){
+        return b==0?a:gcd(b, a%b);
+    }
+    static int lcm(int a, int b){
+        return a*b/gcd(a,b);
+    }
+}
