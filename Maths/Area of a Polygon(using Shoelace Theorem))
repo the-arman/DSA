@@ -1,0 +1,86 @@
+(CSES)Problem Description-
+
+Your task is to calculate the area of a given polygon.
+The polygon consists of n vertices (x_1,y_1),(x_2,y_2),\dots,(x_n,y_n). The vertices (x_i,y_i) and (x_{i+1},y_{i+1}) are adjacent for i=1,2,\dots,n-1, and the vertices (x_1,y_1) and (x_n,y_n) are also adjacent.
+Input
+The first input line has an integer n: the number of vertices.
+After this, there are n lines that describe the vertices. The ith such line has two integers x_i and y_i.
+You may assume that the polygon is simple, i.e., it does not intersect itself.
+Output
+Print one integer: 2a where the area of the polygon is a (this ensures that the result is an integer).
+Constraints
+
+3 \le n \le 1000
+-10^9 \le x_i, y_i \le 10^9
+
+Example
+Input:
+4
+1 1
+4 2
+3 5
+1 4
+
+Output:
+16
+
+Solution Code-
+
+import java.io.*;
+
+public class PolygonArea {
+    public static void main(String[] args) throws IOException {
+        BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+        BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(System.out));
+
+        int n = Integer.parseInt(br.readLine()); // Read number of vertices
+        int[][] vertices = new int[n][2];
+
+        // Read the coordinates of the vertices
+        for (int i = 0; i < n; i++) {
+            String[] s = br.readLine().split(" ");
+            vertices[i][0] = Integer.parseInt(s[0]); // x-coordinate
+            vertices[i][1] = Integer.parseInt(s[1]); // y-coordinate
+        }
+
+        // Calculate twice the area using Shoelace Theorem
+        long area2 = 0;  // This will store 2 * area
+        for (int i = 0; i < n; i++) {
+            int j = (i + 1) % n; // Next vertex, with wrapping around
+            area2 += (long) vertices[i][0] * vertices[j][1] - (long) vertices[i][1] * vertices[j][0];
+        }
+
+        // The area is the absolute value of area2
+        area2 = Math.abs(area2);
+
+        // Output the result (twice the area)
+        bw.write(area2 + "\n");
+        bw.flush();
+        br.close();
+        bw.close();
+    }
+}
+
+
+Time and Space Coomplexity-
+
+The time complexity of the Shoelace Theorem (or Gauss's area formula) is O(n), where n is the number of vertices of the polygon.
+Here's the breakdown:
+
+    Input Reading:
+        First, you need to read the n vertices of the polygon. This step is O(n) since each vertex is represented by a pair of coordinates, and you read all n pairs.
+
+    Area Calculation (Shoelace Theorem):
+        The area is computed by iterating over each vertex of the polygon and performing constant-time arithmetic operations for each vertex. Specifically, for each pair of adjacent vertices (x_i, y_i) and (x_{i+1}, y_{i+1}), you compute the cross products (x_i * y_{i+1} - x_{i+1} * y_i).
+        The formula involves one pass through the list of n vertices, so this part is also O(n).
+
+    Total Time Complexity:
+        Since both the input reading and the area calculation are O(n), the total time complexity is O(n).
+
+Space Complexity:
+
+    Space Complexity: The space complexity is O(n) because you store the coordinates of the n vertices in an array (or a list of tuples).
+
+Conclusion:
+
+The time complexity of the Shoelace Theorem is O(n), which makes it very efficient for calculating the area of a polygon, even for relatively large polygons (up to the constraint of 1000 vertices in this case).
