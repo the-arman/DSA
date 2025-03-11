@@ -1,0 +1,23 @@
+https://practice.geeksforgeeks.org/contest/gfg-weekly-197-rated-contest/problems
+
+
+
+class Solution {
+  public:
+    int findMEX(vector<int>& arr) {
+        // code here
+        int n=arr.size();
+        unordered_map<int, int> mp;
+        for(auto it: arr)mp[it]++;
+        int val=1;
+        int ans=0;
+        while(1){
+            if(!mp.count(val)){
+                ans=val;
+                break;
+            }
+            val*=2;
+        }
+        return ans;
+    }
+};
