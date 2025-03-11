@@ -1,0 +1,131 @@
+In C++, the fill() function is part of the <algorithm> library and is used to assign a specific value to all elements in a range (typically an array, vector, or any container with iterators). It allows you to fill a container or part of a container with a particular value in a very efficient way.
+Syntax:
+
+#include <algorithm>
+
+void fill (ForwardIterator first, ForwardIterator last, const T& value);
+
+    Parameters:
+        first: An iterator to the first element of the range you want to fill.
+        last: An iterator to one past the last element of the range you want to fill.
+        value: The value to assign to each element in the range.
+
+    Return value: The function does not return anything (its return type is void).
+
+Key Points:
+
+    Fills a Range: The function assigns the specified value to all elements in the range [first, last). It works by setting the value for every element from the iterator first up to (but not including) last.
+    Works with Iterators: It works with any type of iterator (e.g., random-access, bidirectional, or forward iterators).
+    Used in Containers: You can use fill to modify elements in standard containers like arrays, vectors, lists, and more, provided they support iterators.
+
+Example Usage:
+1. Filling an Array:
+
+#include <iostream>
+#include <algorithm>
+
+int main() {
+    int arr[5] = {1, 2, 3, 4, 5};
+
+    // Fill all elements of the array with the value 10
+    std::fill(arr, arr + 5, 10);
+
+    // Print the updated array
+    for (int i = 0; i < 5; ++i) {
+        std::cout << arr[i] << " ";
+    }
+    
+    return 0;
+}
+
+Output:
+
+10 10 10 10 10
+
+    Here, we filled the entire array arr with the value 10.
+
+2. Filling a Vector:
+
+#include <iostream>
+#include <vector>
+#include <algorithm>
+
+int main() {
+    std::vector<int> vec = {1, 2, 3, 4, 5};
+
+    // Fill the entire vector with the value 100
+    std::fill(vec.begin(), vec.end(), 100);
+
+    // Print the updated vector
+    for (int val : vec) {
+        std::cout << val << " ";
+    }
+
+    return 0;
+}
+
+Output:
+
+100 100 100 100 100
+
+    In this example, we used std::fill to fill all elements of the vector vec with the value 100.
+
+3. Filling a Subrange of a Container:
+
+You can also use fill to fill only part of a container.
+
+#include <iostream>
+#include <vector>
+#include <algorithm>
+
+int main() {
+    std::vector<int> vec = {1, 2, 3, 4, 5};
+
+    // Fill only a subrange of the vector (index 1 to 3)
+    std::fill(vec.begin() + 1, vec.begin() + 4, 0);
+
+    // Print the updated vector
+    for (int val : vec) {
+        std::cout << val << " ";
+    }
+
+    return 0;
+}
+
+Output:
+
+1 0 0 0 5
+
+    In this case, we only filled the elements at index 1, 2, and 3 with 0, leaving the rest of the vector unchanged.
+
+Explanation of fill:
+
+    Efficiency: std::fill is generally very efficient because it fills the range by assigning the value directly to each element in the range. This makes it faster and more readable than using a loop manually.
+    No Memory Allocation: The function doesn't allocate new memory; it simply modifies the existing elements in the range.
+
+When to Use fill:
+
+    To Set Initial Values: If you want to initialize all elements of a container (array, vector, etc.) to a specific value, std::fill is a quick and efficient way to do it.
+    For Specific Ranges: When you want to set values for only part of a container, you can specify iterators to that subrange, giving you fine control over which elements to modify.
+    Simplicity and Readability: It is often more concise and readable than using a for loop to assign values manually.
+
+Alternative: Using Loops
+
+While fill is great for many cases, you could always use a loop if you want more control over the process or need additional logic:
+
+for (int i = 0; i < n; ++i) {
+    arr[i] = 10;
+}
+
+However, std::fill is cleaner and more optimized for this purpose.
+Time Complexity:
+
+The time complexity of std::fill is O(n), where n is the number of elements in the range [first, last). This is because each element needs to be assigned the specified value.
+Space Complexity:
+
+The space complexity is O(1), meaning that std::fill does not require additional space proportional to the size of the container, other than the input iterators themselves.
+Conclusion:
+
+    std::fill is a simple and efficient way to assign a value to a range of elements in a container (like an array or vector).
+    It is preferred over manually looping through the container because it is more concise and can often be more efficient.
+    It can fill an entire container or a specific range, making it versatile.
