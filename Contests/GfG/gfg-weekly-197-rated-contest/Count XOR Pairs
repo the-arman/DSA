@@ -1,11 +1,18 @@
 https://practice.geeksforgeeks.org/contest/gfg-weekly-197-rated-contest/problems
 
+
+
+// User function Template for Java
 class Solution {
-  public:
-    int findMEX(vector<int>& arr) {
+    public static long xorPairs(int[] arr) {
         // code here
-        int n=arr.size();
-        unordered_map,int, int> mp;
-        for(auto it: arr)
+       Map<Integer, Integer> s=new HashMap<>();
+        long ans=0;
+        for(int i=0;i<arr.length;i++){
+            int val=i^arr[i];
+            if(s.containsKey(val))ans+=s.get(val);
+            s.put(val, s.getOrDefault(val, 0)+1);
+        }
+        return ans;
     }
-};
+}
