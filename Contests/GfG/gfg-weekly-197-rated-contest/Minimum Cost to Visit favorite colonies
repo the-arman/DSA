@@ -1,0 +1,52 @@
+https://practice.geeksforgeeks.org/contest/gfg-weekly-197-rated-contest/problems
+
+class Solution {
+  public:
+  set<int> taken;
+  
+  long long findCost(int node, vector<vector<int>> &adj, vector<bool> &vis){
+      vis[node]=true;
+      long long cost=0;
+      for(auto it:adj[node]){
+          if(!vis[it] and taken.find(it)!=taken.end()){
+              cost+=abs(node-it)+findCost(it, adj, vis);
+          }
+      }
+      return cost;
+  }
+  
+  
+  bool dfs(int node, vector<vector<int>> &adj, vector<bool> &vis, set<int> &st){
+      vis[node]=true;
+      bool down=false;
+      if(st.find(node)!=st.end())down=true;
+      for(auto it: adj[node]){
+          if(!vis[it]){
+              down|=dfs(it, adj, vis, st);
+          }
+      }
+      if(down)taken.insert(node);
+      return down;
+  }
+  
+    long long minCostToVisit(vector<vector<int>>& roads, vector<int>& favorites) {
+        // code here
+        int n=roads.size()+1;
+        vector<vector<int>> adj(n+1);
+        for(int i=0;i<n-1;i++){
+            int x=roads[i][0], y=roads[i][1];
+            adj[x].push_back(y);
+            adj[y].push_back(x);
+        }
+        set<int> st(favorites.begin(), favorites.end());
+        vector<bool> vis(n+1, false);
+        
+          dfs(favorites[0], adj, vis, st);
+        
+        fill(vis.begin(), vis.end(), false);
+        return findCost(favorites[0], adj, vis);
+    }
+};
+
+T.C. O(V+E)
+S.C. O(V)
