@@ -1,7 +1,7 @@
 https://practice.geeksforgeeks.org/contest/gfg-weekly-197-rated-contest/problems
 
 
-
+ 
 // User function Template for Java
 class Solution {
     public static long xorPairs(int[] arr) {
