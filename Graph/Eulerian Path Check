@@ -2,7 +2,7 @@ Eulerian Path is a path in a graph that visits every edge exactly once. Eulerian
 
 Example 1:
 
-Input: 
+Input:  
 v = 4 
 edges[] = {{0, 1}, 
            {0, 2}, 
