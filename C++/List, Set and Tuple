@@ -6,7 +6,7 @@ A list in C++ is part of the Standard Template Library (STL) and is implemented 
 #include <iostream> 
 #include <list>
   
-int main() {
+int main() { 
     // Declare and initialize an empty list
     std::list<int> myList;
 
