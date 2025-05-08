@@ -6,7 +6,7 @@ You are also given an integer k, which is the desired number of consecutive blac
 
 In one operation, you can recolor a white block such that it becomes a black block.
 
-Return the minimum number of operations needed such that there is at least one occurrence of k consecutive black blocks.
+Return the minimum number of operations needed such that there is at least one occurrence of k consecutive black blocks. 
 
  
 
