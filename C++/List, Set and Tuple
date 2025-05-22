@@ -1,5 +1,5 @@
 In C++ , you can declare and initialize lists, tuples, and sets in the following ways:
-1. List (using std::list):   
+1. List (using std::list):    
 
 A list in C++ is part of the Standard Template Library (STL) and is implemented as a doubly linked list.
 
