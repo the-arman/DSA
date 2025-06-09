@@ -1,4 +1,4 @@
-Problem Description-
+Problem Description- 
 
 Let's denote the score of an array b with k elements as ∑ki=1(∑ij=1bj). In other words, let Si denote the sum of the first i elements of b. Then, the score can be denoted as S1+S2+…+Sk
 
