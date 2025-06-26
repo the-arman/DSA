@@ -1,5 +1,5 @@
 TreeSet is one of the most important implementations of the SortedSet interface in Java that uses a Tree(red-black tree) for storage. The ordering of the elements is maintained by a set using their natural ordering whether or not an explicit comparator is provided. This must be consistent with equals if it is to correctly implement the set interface.
-
+ 
 - TreeSet does not allow duplicate elements. Any attempt to add a duplicate element will be ignored.
 - It does not allow null values and throws NullPointerException if null element is inserted in it.
 - TreeSet implements the NavigableSet interface and provides additional methods to navigate the set(eg. higher(), lower(), ceiling(), floor()).
