@@ -6,7 +6,7 @@ You are given a matrix mat[][] of size n x m where each element is a positive in
 
 Find the maximum sum of any path starting from any column in the first row and ending at any column in the last row, following the above movement constraints.
 
-Examples :
+Examples : 
 
 Input: mat[][] = [[3, 6, 1], [2, 3, 4], [5, 5, 1]]
 Output: 15
