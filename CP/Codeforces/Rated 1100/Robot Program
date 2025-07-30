@@ -2,7 +2,7 @@ Problem Description-
   
 There is a robot on the coordinate line. Initially, the robot is located at the point x (x≠0). The robot has a sequence of commands of length n consisting of characters, where L represents a move to the left by one unit (from point p to point (p−1)) and R represents a move to the right by one unit (from point p to point (p+1)
 
-).    
+).     
  
 The robot starts executing this sequence of commands (one command per second, in the order they are presented). However, whenever the robot reaches the point 0
 , the counter of executed commands is reset (i. e. it starts executing the entire sequence of commands from the very beginning). If the robot has completed all commands and is not at 0
