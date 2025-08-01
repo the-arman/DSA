@@ -8,7 +8,7 @@ In one operation, you can recolor a white block such that it becomes a black blo
 
 Return the minimum number of operations needed such that there is at least one occurrence of k consecutive black blocks. 
 
- 
+  
 
 Example 1:
 
