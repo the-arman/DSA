@@ -1,5 +1,5 @@
 A tuple is an object that can hold a number of elements. The elements can be of different data types. The elements of tuples are initialized as arguments in order in which they will be accessed.  Tuples are a versatile data structure for grouping values. To understand how to use tuples in C++ and their applications, the C++ Course provides comprehensive tutorials and examples.  
-Operations on Tuple          
+Operations on Tuple           
   
 1. get(): get() is used to access the tuple values and modify them, it accepts the index and tuple name as arguments to access a particular tuple element. 
 
